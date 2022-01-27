@@ -43,11 +43,3 @@ class Stack:
         for i in self:
             counter += 1
         return counter
-
-
-if __name__ == '__main__':
-    my_stack = Stack()
-    my_stack.push(5)
-    my_stack.push(3)
-    my_stack.push(2)
-    print(my_stack.size())
