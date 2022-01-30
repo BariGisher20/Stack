@@ -11,7 +11,7 @@ class Stack:
     def __init__(self):
         self.tail = None
 
-    def __isEmpty__(self):
+    def isEmpty(self):
         if self.tail is None:
             return True
         else:
@@ -20,14 +20,18 @@ class Stack:
     def push(self, value: Any):
         new_stack_item = StackItem(value, self.tail)
         self.tail = new_stack_item
+        return self
 
-    def pop(self):
-        self.tail = self.tail.prev_stack_item.value
-        return self.tail
+    def pop(self, value: Any):
+        value = self.tail.value
+        self.tail = self.tail.prev_stack_item
+        return value
 
     def peek(self):
-        value = self.tail.value
-        return value
+        value = self.tail
+        if self.isEmpty():
+            return 'Пустой'
+        return value.value
 
     def __iter__(self):
         self.cursor = StackItem(None, self.tail)
@@ -43,3 +47,26 @@ class Stack:
         for i in self:
             counter += 1
         return counter
+
+
+open = ['(', '[', '{']
+close = [')', ']', '}']
+
+
+def check(str):
+    stack = Stack()
+    for i in str:
+        if i in open:
+            stack.push(i)
+        elif i in close:
+            if open.index(stack.peek()) == close.index(i):
+                stack.pop(stack.peek())
+
+    if stack.isEmpty():
+        return 'ok'
+    else:
+        return 'not ok'
+
+
+str_1 = '{[}]'
+print(check(str_1))
